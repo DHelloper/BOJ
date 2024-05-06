@@ -21,24 +21,16 @@ public class Main {
         int K = Integer.parseInt(st.nextToken());
         Point[] points = new Point[N];
         int dp[][] = new int[K+1][N];
-        int dis[][] = new int[N][N];
 
-        int[] arr;
         for(int i=0; i<N; i++)
         {
             st = new StringTokenizer(br.readLine());
             points[i] = new Point(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
-
-            arr = new int[N];
-            Arrays.fill(arr,-1);
-            dis[i] = arr;
         }
 
         for(int i=0; i<=K; i++)
         {
-            arr = new int[N];
-            Arrays.fill(arr,-1);
-            dp[i] = arr;
+            Arrays.fill(dp[i],-1);
             if(i==0)dp[i][0]=0;
         }
 
@@ -53,8 +45,6 @@ public class Main {
                         temp = dp[j-k][i-k-1];
                         if(temp==-1) continue;
                         int distance = Math.abs(points[i-k-1].x-points[i].x) + Math.abs(points[i-k-1].y-points[i].y);
-                        dis[i-k-1][i] = distance;
-                        dis[i][i-k-1] = distance;
                         min = Math.min(min, temp+distance);
                     }
                     dp[j][i] = min;
@@ -64,11 +54,10 @@ public class Main {
         int result = dp[0][N-1];
         for(int i=1; i<=K; i++)
         {
+            //Math.min(result,dp[i][N-1]);
             if(dp[i][N-1] < result) result = dp[i][N-1];
         }
         System.out.println(result);
-
-
 
     }
 }
